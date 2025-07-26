@@ -44,18 +44,18 @@ Street food vendors and small-scale food businesses looking to:
 
 ## 📂 File Structure
 vendor-assist-chatbot/
-├── index.html
-├── dashboard.html
-├── style.css
-├── auth.js
-├── supabase.js
-├── vendors_specific_train.csv
-├── chatbot_bg.png
-└── screenshots/
-├── auth_page.png
-├── chatbot_panel.png
-├── vendor_dashboard.png
-└── feedback_form.png
+├── index.html  
+├── dashboard.html  
+├── style.css  
+├── auth.js  
+├── supabase.js  
+├── vendors_specific_train.csv  
+├── chatbot_bg.png  
+└── screenshots/  
+├── auth_page.png  
+├── chatbot_panel.png  
+├── vendor_dashboard.png  
+└── feedback_form.png  
 ---
 
 
