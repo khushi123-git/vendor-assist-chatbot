@@ -55,8 +55,8 @@ vendor-assist-chatbot/
 ├── chatbot_panel.png  
 ├── vendor_dashboard.png  
 └── feedback_form.png  
----
 
+---
 
 ## 📝 Feedback Form
 
