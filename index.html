@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Vendor Assist Chatbot</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <header>
+    <h1>🍕🍔Vendor Assist Chatbot🍟🍿</h1>
+  </header>
+
+  <main class="banner-container">
+  <div class="auth-overlay">
+    <!-- Login Box -->
+    <div id="login-box" class="auth-box">
+      <h2>Welcome Back</h2>
+      <input type="email" placeholder="Email" id="login-email" />
+      <div class="password-wrapper">
+  <input type="password" placeholder="Password" id="login-password" />
+  <span class="toggle-visibility" onclick="togglePassword('login-password', this)">👁️</span>
+</div>
+      <button class="orange-btn" onclick="login()">Login</button>
+      <p class="link-text">New here? <a href="#" onclick="toggleForm()">Sign up</a></p>
+    </div>
+
+    <!-- Signup Box -->
+    <div id="signup-box" class="auth-box hidden">
+      <h2>Create Account</h2>
+      <input type="email" placeholder="Email" id="signup-email" />
+      <div class="password-wrapper">
+  <input type="password" placeholder="Password" id="signup-password" />
+  <span class="toggle-visibility" onclick="togglePassword('signup-password', this)">👁️</span>
+</div>
+      <button class="orange-btn" onclick="signup()">Sign Up</button>
+      <p class="link-text">Already have an account? <a href="#" onclick="toggleForm()">Login</a></p>
+    </div>
+  </div>
+</main>
+
+ <script type="module">
+  import { login, signup } from './auth.js';
+
+  window.login = login;
+  window.signup = signup;
+</script>
+
+<script>
+  function toggleForm() {
+    const loginBox = document.getElementById("login-box");
+    const signupBox = document.getElementById("signup-box");
+    loginBox.classList.toggle("hidden");
+    signupBox.classList.toggle("hidden");
+  }
+</script>
+<script>
+  function togglePassword(id, icon) {
+    const input = document.getElementById(id);
+    if (input.type === "password") {
+      input.type = "text";
+      icon.textContent = "👁️‍🗨️";
+    } else {
+      input.type = "password";
+      icon.textContent = "👁️";
+    }
+  }
+</script>
+
+
+</body>
+</html>

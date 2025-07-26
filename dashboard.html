@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Vendor Dashboard</title>
+  <link rel="stylesheet" href="style.css" />
+  <style>
+    .dashboard-container {
+      padding: 20px;
+      max-width: 900px;
+      margin: auto;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      background: white;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+      margin-top: 24px;
+    }
+
+    th, td {
+      padding: 12px 16px;
+      text-align: left;
+      border-bottom: 1px solid #f0f0f0;
+    }
+
+    th {
+      background: #ff7a00;
+      color: white;
+    }
+
+    tr:hover {
+      background-color: #fff2e6;
+    }
+
+    .rating {
+      color: #ff7a00;
+      font-weight: 500;
+    }
+
+    #user-email {
+      margin-bottom: 10px;
+      font-weight: 500;
+    }
+
+    /* Chatbot styles */
+    #chatbot-btn {
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      background-color: #ff7a00;
+      color: white;
+      border: none;
+      border-radius: 50px;
+      padding: 12px 18px;
+      font-size: 1rem;
+      cursor: pointer;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.15);
+      z-index: 1000;
+    }
+
+    #chatbot-panel {
+      position: fixed;
+      top: 0;
+      right: -400px;
+      width: 400px;
+      height: 100%;
+      background: white;
+      border-left: 1px solid #eee;
+      box-shadow: -4px 0 12px rgba(0, 0, 0, 0.1);
+      transition: right 0.3s ease;
+      z-index: 999;
+      display: flex;
+      flex-direction: column;
+    }
+
+    #chatbot-panel.open {
+      right: 0;
+    }
+
+    #chatbot-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background-color: #ff7a00;
+      color: white;
+      padding: 12px 16px;
+      font-size: 1rem;
+    }
+
+    #chatbot-iframe {
+      flex: 1;
+      width: 100%;
+      border: none;
+    }
+
+    #chatbot-close {
+      background: transparent;
+      border: none;
+      color: white;
+      font-size: 1.2rem;
+      cursor: pointer;
+    }
+  </style>
+</head>
+
+<body>
+  <header style="display: flex; justify-content: space-between; align-items: center; padding: 16px 24px; border-bottom: 1px solid #eee; background: white;">
+    <h1 style="margin: 0; color: #ff7a00;">Vendor Assist 🧡</h1>
+    <div>
+      <span id="user-email" style="margin-right: 16px; font-weight: 500;"></span>
+      <button class="orange-btn" onclick="logout()">Logout</button>
+    </div>
+  </header>
+
+  <div class="dashboard-container">
+    <h2 style="text-align: center; margin-top: 24px; color: #333;">
+      🛒 Our Trusted Vendor Network
+    </h2>
+
+    <table id="vendor-table">
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>Category</th>
+          <th>Location</th>
+          <th>Price</th>
+          <th>Notes</th>
+          <th>Ratings</th>
+        </tr>
+      </thead>
+      <tbody>
+        <!-- Vendor rows go here -->
+      </tbody>
+    </table>
+  </div>
+
+  <!-- Load CSV parser -->
+  <script src="https://cdn.jsdelivr.net/npm/papaparse@5.4.1/papaparse.min.js"></script>
+
+  <!-- Vendor data + Supabase auth -->
+  <script type="module">
+    import { supabase } from './supabase.js';
+
+    async function getUser() {
+      const { data: { user }, error } = await supabase.auth.getUser();
+      if (error || !user) {
+        window.location.href = 'index.html';
+      } else {
+        document.getElementById('user-email').textContent = `Logged in as: ${user.email}`;
+      }
+    }
+
+    async function logout() {
+      await supabase.auth.signOut();
+      window.location.href = 'index.html';
+    }
+
+    window.logout = logout;
+
+    getUser();
+
+    // Load vendors from CSV
+    Papa.parse("vendors_specific_train.csv", {
+      download: true,
+      header: true,
+      complete: function(results) {
+        const tableBody = document.querySelector("#vendor-table tbody");
+
+        results.data.forEach(vendor => {
+          const isEmpty = Object.values(vendor).every(val => !val || val.trim() === "");
+          if (isEmpty) return;
+          const row = document.createElement("tr");
+          row.innerHTML = `
+            <td>${vendor.Name}</td>
+            <td>${vendor.Category}</td>
+            <td>${vendor.Location}</td>
+            <td>${vendor.Price_per_unit}</td>
+            <td>${vendor.Notes}</td>
+            <td class="rating">${vendor.Ratings}</td>
+          `;
+          tableBody.appendChild(row);
+        });
+      }
+    });
+  </script>
+
+  <!-- Chatbot Button -->
+  <button id="chatbot-btn" title="Open Chatbot">💬 Chat</button>
+
+  <!-- Slide-in Chatbot Panel -->
+  <div id="chatbot-panel">
+    <div id="chatbot-header">
+      <span>Vendor Chatbot</span>
+      <button id="chatbot-close">✖</button>
+    </div>
+    <iframe 
+      src="https://vendor-assist-chatbot.lovable.app" 
+      frameborder="0" 
+      id="chatbot-iframe"
+    ></iframe>
+  </div>
+
+  <!-- Toggle chatbot panel -->
+  <script>
+    const chatbotBtn = document.getElementById('chatbot-btn');
+    const chatbotPanel = document.getElementById('chatbot-panel');
+    const chatbotClose = document.getElementById('chatbot-close');
+
+    chatbotBtn.addEventListener('click', () => {
+      chatbotPanel.classList.add('open');
+    });
+
+    chatbotClose.addEventListener('click', () => {
+      chatbotPanel.classList.remove('open');
+    });
+  </script>
+</body>
+</html>
