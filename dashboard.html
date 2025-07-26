@@ -279,49 +279,50 @@ textarea {
 
   <!-- Vendor data + Supabase auth -->
   <script type="module">
-    import { supabase } from './supabase.js';
+  import { supabase } from './supabase.js';
 
-    async function getUser() {
-      const { data: { user }, error } = await supabase.auth.getUser();
-      if (error || !user) {
-        window.location.href = 'index.html';
-      } else {
-        document.getElementById('user-email').textContent = `Logged in as: ${user.email}`;
-      }
-    }
-
-    async function logout() {
-      await supabase.auth.signOut();
+  async function getUser() {
+    const { data: { user }, error } = await supabase.auth.getUser();
+    if (error || !user) {
       window.location.href = 'index.html';
+    } else {
+      document.getElementById('user-email').textContent = `Logged in as: ${user.email}`;
     }
+  }
 
-    window.logout = logout;
+  async function logout() {
+    await supabase.auth.signOut();
+    window.location.href = 'index.html';
+  }
 
-    getUser();
+  window.logout = logout;
+  getUser();
 
-    // Load vendors from CSV
-    Papa.parse("vendors_specific_train.csv", {
-      download: true,
-      header: true,
-      complete: function(results) {
-        const tableBody = document.querySelector("#vendor-table tbody");
+  // Load vendors from CSV
+  Papa.parse("vendors_specific_train.csv", {
+    download: true,
+    header: true,
+    complete: function(results) {
+      const tableBody = document.querySelector("#vendor-table tbody");
 
-        results.data.forEach(vendor => {
-          const isEmpty = Object.values(vendor).every(val => !val || val.trim() === "");
-          if (isEmpty) return;
-          const row = document.createElement("tr");
-          row.innerHTML = `
-            <td>${vendor.Name}</td>
-            <td>${vendor.Category}</td>
-            <td>${vendor.Location}</td>
-            <td>${vendor.Price_per_unit}</td>
-            <td>${vendor.Notes}</td>
-            <td class="rating">${vendor.Ratings}</td>
-          `;
-          tableBody.appendChild(row);
-        });
-      }
-    });
+      results.data.forEach(vendor => {
+        const isEmpty = Object.values(vendor).every(val => !val || val.trim() === "");
+        if (isEmpty) return;
+        const row = document.createElement("tr");
+        row.innerHTML = `
+          <td>${vendor.Name}</td>
+          <td>${vendor.Category}</td>
+          <td>${vendor.Location}</td>
+          <td>${vendor.Price_per_unit}</td>
+          <td>${vendor.Notes}</td>
+          <td class="rating">${vendor.Ratings}</td>
+        `;
+        tableBody.appendChild(row);
+      });
+    }
+  });
+
+  // Search filter
   document.getElementById("search-input").addEventListener("input", function () {
     const searchValue = this.value.toLowerCase();
     const rows = document.querySelectorAll("#vendor-table tbody tr");
@@ -331,7 +332,10 @@ textarea {
       row.style.display = text.includes(searchValue) ? "" : "none";
     });
   });
+
+
 </script>
+
 
 
   <!-- Chatbot Button -->
