@@ -58,13 +58,17 @@ vendor-assist-chatbot/
 
 ## 📷 Screenshots
 
-<img width="1920" height="843" alt="image" src="https://github.com/user-attachments/assets/d0eeb9bb-41a8-4c49-ba9a-ea1ef9a1e8d8" />
 
-<img width="1920" height="844" alt="image" src="https://github.com/user-attachments/assets/9c2f6957-9e09-48b5-8298-063a1b58785c" />
+<img width="1920" height="843" alt="image" src="https://github.com/user-attachments/assets/d0eeb9bb-41a8-4c49-ba9a-ea1ef9a1e8d8" />  
 
-<img width="1920" height="844" alt="image" src="https://github.com/user-attachments/assets/81508b90-7ab7-407d-990a-29b4d509c47a" />
 
-<img width="1920" height="837" alt="image" src="https://github.com/user-attachments/assets/7f8e9ee7-4798-486f-b48b-6ab0f62b41f4" />
+<img width="1920" height="844" alt="image" src="https://github.com/user-attachments/assets/9c2f6957-9e09-48b5-8298-063a1b58785c" />  
+
+
+<img width="1920" height="844" alt="image" src="https://github.com/user-attachments/assets/81508b90-7ab7-407d-990a-29b4d509c47a" />  
+
+
+<img width="1920" height="837" alt="image" src="https://github.com/user-attachments/assets/7f8e9ee7-4798-486f-b48b-6ab0f62b41f4" />  
 
 ---
 
