@@ -43,7 +43,7 @@ Street food vendors and small-scale food businesses looking to:
 ---
 
 ## 📂 File Structure
-vendor-assist-chatbot/  
+vendor-assist-chatbot  
 ├── index.html  
 ├── dashboard.html  
 ├── style.css  
