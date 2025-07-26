@@ -44,33 +44,20 @@ Street food vendors and small-scale food businesses looking to:
 
 ## 📂 File Structure
 vendor-assist-chatbot/
-│
-├── index.html # Login/Signup UI
-├── dashboard.html # Vendor dashboard
-├── style.css # Styling
-├── auth.js # Supabase login/signup/logout logic
-├── supabase.js # Supabase client config
-├── vendors_specific_train.csv # Vendor data
-└── README.md # This file
-
-
+├── index.html
+├── dashboard.html
+├── style.css
+├── auth.js
+├── supabase.js
+├── vendors_specific_train.csv
+├── chatbot_bg.png
+└── screenshots/
+├── auth_page.png
+├── chatbot_panel.png
+├── vendor_dashboard.png
+└── feedback_form.png
 ---
 
-## 📷 Screenshots
-
-
-<img width="1920" height="843" alt="image" src="https://github.com/user-attachments/assets/d0eeb9bb-41a8-4c49-ba9a-ea1ef9a1e8d8" />  
-
-
-<img width="1920" height="844" alt="image" src="https://github.com/user-attachments/assets/9c2f6957-9e09-48b5-8298-063a1b58785c" />  
-
-
-<img width="1920" height="844" alt="image" src="https://github.com/user-attachments/assets/81508b90-7ab7-407d-990a-29b4d509c47a" />  
-
-
-<img width="1920" height="837" alt="image" src="https://github.com/user-attachments/assets/7f8e9ee7-4798-486f-b48b-6ab0f62b41f4" />  
-
----
 
 ## 📝 Feedback Form
 
