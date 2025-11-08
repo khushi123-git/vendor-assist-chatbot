@@ -299,39 +299,30 @@ textarea {
   getUser();
 
   // Load vendors from CSV
-  Papa.parse("vendors_specific_train.csv", {
-    download: true,
-    header: true,
-    complete: function(results) {
-      const tableBody = document.querySelector("#vendor-table tbody");
+  Papa.parse("https://vendor-assist.netlify.app/vendors_specific_train.csv", {
+  download: true,
+  header: true,
+  complete: function(results) {
+    const tableBody = document.querySelector("#vendor-table tbody");
 
-      results.data.forEach(vendor => {
-        const isEmpty = Object.values(vendor).every(val => !val || val.trim() === "");
-        if (isEmpty) return;
-        const row = document.createElement("tr");
-        row.innerHTML = `
-          <td>${vendor.Name}</td>
-          <td>${vendor.Category}</td>
-          <td>${vendor.Location}</td>
-          <td>${vendor.Price_per_unit}</td>
-          <td>${vendor.Notes}</td>
-          <td class="rating">${vendor.Ratings}</td>
-        `;
-        tableBody.appendChild(row);
-      });
-    }
-  });
+    results.data.forEach(vendor => {
+      const isEmpty = Object.values(vendor).every(val => !val || val.trim() === "");
+      if (isEmpty) return;
 
-  // Search filter
-  document.getElementById("search-input").addEventListener("input", function () {
-    const searchValue = this.value.toLowerCase();
-    const rows = document.querySelectorAll("#vendor-table tbody tr");
-
-    rows.forEach(row => {
-      const text = row.innerText.toLowerCase();
-      row.style.display = text.includes(searchValue) ? "" : "none";
+      const row = document.createElement("tr");
+      row.innerHTML = `
+        <td>${vendor.Name}</td>
+        <td>${vendor.Category}</td>
+        <td>${vendor.Location}</td>
+        <td>${vendor.Price_per_unit}</td>
+        <td>${vendor.Notes}</td>
+        <td class="rating">${vendor.Ratings}</td>
+      `;
+      tableBody.appendChild(row);
     });
-  });
+  }
+});
+
 
 
 </script>
@@ -389,6 +380,42 @@ textarea {
       msg.style.display = "none";
     }, 3000);
   });
+    // Detect if we are running on Netlify or locally
+const isNetlify = window.location.hostname.includes("netlify.app");
+
+// CSV path
+const csvPath = isNetlify 
+  ? "https://vendor-assist.netlify.app/vendors_specific_train.csv" // Netlify hosted
+  : "./vendors_specific_train.csv"; // Local for Live Server
+
+Papa.parse(csvPath, {
+  download: true,
+  header: true,
+  complete: function(results) {
+    const tableBody = document.querySelector("#vendor-table tbody");
+
+    results.data.forEach(vendor => {
+      // Skip empty rows
+      const isEmpty = Object.values(vendor).every(val => !val || val.trim() === "");
+      if (isEmpty) return;
+
+      const row = document.createElement("tr");
+      row.innerHTML = `
+        <td>${vendor.Name}</td>
+        <td>${vendor.Category}</td>
+        <td>${vendor.Location}</td>
+        <td>${vendor.Price_per_unit}</td>
+        <td>${vendor.Notes}</td>
+        <td class="rating">${vendor.Ratings}</td>
+      `;
+      tableBody.appendChild(row);
+    });
+  },
+  error: function(err) {
+    console.error("CSV load error:", err);
+  }
+});
+
 </script>
 
 </body>
